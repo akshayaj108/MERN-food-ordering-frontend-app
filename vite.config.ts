@@ -2,7 +2,7 @@ import path from "path";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   resolve: {
     alias: {
@@ -10,7 +10,10 @@ export default defineConfig({
     },
   },
   server: {
-    host: "0.0.0.0", // This binds the server to 0.0.0.0, allowing external access
-    port: Number(process.env.PORT) || 9009, // Use the environment port or default to 5173
+    host: "0.0.0.0",
+    port: Number(process.env.PORT) || 9009,
   },
-});
+  build: {
+    minify: mode === "production", // Ensure minification in production
+  },
+}));
