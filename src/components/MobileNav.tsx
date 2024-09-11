@@ -12,7 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import MobileUserNavLinks from "./MobileUserNavLinks";
 
 const MobileNav = () => {
-  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, user, loginWithRedirect } = useAuth0();
   return (
     <Sheet>
       <SheetTrigger>

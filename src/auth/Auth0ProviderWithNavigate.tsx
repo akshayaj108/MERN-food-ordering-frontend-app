@@ -1,4 +1,3 @@
-import { useCreateMyUser } from "@/apiRequest/MyUserApi";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +6,6 @@ type Props = {
 };
 
 const Auth0ProviderWithNavigate = ({ children }: Props) => {
-  const { createUser } = useCreateMyUser();
   const navigate = useNavigate();
   const domain = import.meta.env.VITE_AUTH0_DOMAIN;
   const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;

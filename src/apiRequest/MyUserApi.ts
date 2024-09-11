@@ -43,7 +43,7 @@ export const useCreateMyUser = () => {
   const createMyUserRequest = async (user: CreateUserRequest) => {
     const accessToken = await getAccessTokenSilently();
     try {
-      const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      await fetch(`${API_BASE_URL}/api/my/user`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -97,7 +97,6 @@ export const useUpdateMyUser = () => {
     mutateAsync: updateUser,
     isLoading,
     isSuccess,
-    isError,
     error,
     reset,
   } = useMutation(updateMyUserRequest);
