@@ -1,7 +1,7 @@
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { any, z } from "zod";
+import { z } from "zod";
 import DetailsSection from "./DetailsSection";
 import { Separator } from "@/components/ui/separator";
 import CuisinesSection from "./CuisinesSection";
@@ -79,14 +79,19 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     );
     const formattedMenuItems = restaurant.menuItems.map((item) => ({
       ...item,
-      price: parseInt((item.price / 111).toFixed(2)),
+      price: parseInt((Number(item.price) / 111).toFixed(2)),
     }));
-    const updateRestaurant = {
-      ...restaurant,
+    const updatedRestaurant = {
+      restaurantName: restaurant.restaurantName,
+      city: restaurant.city,
+      country: restaurant.country,
       deliveryPrice: formattedDeliveryPrice,
+      estimatedDeliveryTime: restaurant.estimatedDeliveryTime,
+      cuisines: restaurant.cuisines,
       menuItems: formattedMenuItems,
+      imageUrl: restaurant.imageFile,
     };
-    form.reset(updateRestaurant);
+    form.reset(updatedRestaurant);
   }, [form, restaurant]);
 
   const onSubmit = (formDataJson: RestaurantFormData) => {
