@@ -12,6 +12,7 @@ import { useFormContext } from "react-hook-form";
 const ImageUploadSection = () => {
   const { control, watch } = useFormContext();
   const existingImageUrl = watch("imageUrl");
+  console.log("image url====================", existingImageUrl);
   return (
     <div className="space-y-2">
       <div>

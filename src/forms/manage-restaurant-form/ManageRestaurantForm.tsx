@@ -73,6 +73,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     if (!restaurant) {
       return;
     }
+    console.log("restaurant", restaurant.imageUrl);
     //price convertion from database to frontend value
     const formattedDeliveryPrice = parseInt(
       (restaurant.deliveryPrice / 111).toFixed(2)
@@ -89,7 +90,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
       estimatedDeliveryTime: restaurant.estimatedDeliveryTime,
       cuisines: restaurant.cuisines,
       menuItems: formattedMenuItems,
-      imageUrl: restaurant.imageFile,
+      imageUrl: restaurant.imageUrl,
     };
     form.reset(updatedRestaurant);
   }, [form, restaurant]);

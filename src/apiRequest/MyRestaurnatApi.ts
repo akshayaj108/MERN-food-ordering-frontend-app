@@ -50,7 +50,7 @@ export const useCreateMyRestaurant = () => {
     if (!response?.ok) {
       throw new Error("Failed to create Restaurant");
     }
-    console.log("res", response.json());
+
     return response.json();
   };
 
