@@ -19,7 +19,7 @@ const HomePage = () => {
         </h1>
         <span className="text-xl">Food is just a click way!</span>
         <SearchBar
-          placeholder="Search by City or Dish Name"
+          placeholder="Search by City or Town"
           onSubmit={handleSearchSubmit}
           onReset={onReset}
         />

@@ -12,6 +12,7 @@ export const useSearchRestaurant = (
     const params = new URLSearchParams();
     params.set("searchQuery", searchState.searchQuery);
     params.set("page", searchState.page.toString());
+    params.set("sortOption", searchState.sortOption.toString());
     params.set("selectedCuisines", searchState.selectedCuisines.join(","));
     const url = `${API_BASE_URL}/api/restaurant/search/${city}?${params.toString()}`;
     const response = await fetch(url);

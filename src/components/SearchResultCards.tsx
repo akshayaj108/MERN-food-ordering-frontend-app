@@ -40,7 +40,7 @@ const SearchResultCards = ({ restaurant }: Props) => {
             </div>
             <div className="flex items-center gap-1">
               <Banknote />
-              Delivery from Rs {(restaurant.deliveryPrice / 100).toFixed(2)}
+              Delivery from Rs {restaurant.deliveryPrice}
             </div>
           </div>
         </div>

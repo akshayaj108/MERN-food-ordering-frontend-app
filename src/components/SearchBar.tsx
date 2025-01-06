@@ -11,7 +11,7 @@ type Props = {
   onSubmit: (formData: searchForm) => void;
   placeholder: string;
   onReset: () => void;
-  searchQuery: string;
+  searchQuery?: string;
 };
 const formSchema = z.object({
   searchQuery: z.string({
@@ -43,7 +43,7 @@ const SearchBar = ({ onSubmit, onReset, placeholder, searchQuery }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`flex items-center flex-1 gap-3 justify-center flex-row border-2 rounded-full p-3 ${
+        className={`flex items-center gap-3 justify-center flex-row border-2 rounded-full p-3 ${
           form.formState.errors.searchQuery && "border-red-500"
         }`}
       >
