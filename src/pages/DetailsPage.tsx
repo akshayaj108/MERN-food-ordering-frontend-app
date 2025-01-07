@@ -31,7 +31,7 @@ function DetailsPage() {
       const isExistItem = prevCartItem.find(
         (cartItem: CartItem) => cartItem._id === menuItem._id
       );
-      let updatedCartItem;
+      let updatedCartItem: CartItem[];
       if (isExistItem) {
         updatedCartItem = prevCartItem.map((cartItem: CartItem) =>
           cartItem._id === menuItem._id
@@ -39,15 +39,11 @@ function DetailsPage() {
             : cartItem
         );
       } else {
-        updatedCartItem = [
-          ...prevCartItem,
-          {
-            _id: menuItem._id,
-            name: menuItem.name,
-            price: menuItem.price,
-            quantity: 1,
-          },
-        ];
+        updatedCartItem = prevCartItem.map((cartItem: CartItem) =>
+          cartItem._id === menuItem._id
+            ? { ...cartItem, quantity: 1 }
+            : cartItem
+        );
       }
       //2. if not then add item in cart as new item
       return updatedCartItem;
