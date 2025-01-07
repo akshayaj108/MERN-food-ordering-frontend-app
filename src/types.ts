@@ -6,7 +6,7 @@ export type User = {
   city: string;
   country: string;
 };
-type MenuItem = {
+export type MenuItem = {
   _id: string;
   name: string;
   price: string;
