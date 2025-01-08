@@ -1,9 +1,11 @@
 import { useGetRestaurantDetails } from "@/apiRequest/SearchRestaurantsApi";
+import CheckoutButton from "@/components/CheckoutButton";
 import MenuItem from "@/components/MenuItem";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfoCard from "@/components/RestaurantInfoCard";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
+import { UserFormData } from "@/forms/user-profile-form/UserProfileForm";
 import { MenuItem as MenuItemType } from "@/types";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -17,7 +19,10 @@ export type CartItem = {
 function DetailsPage() {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetRestaurantDetails(restaurantId);
-  const [cartItem, setCartItems] = useState<CartItem[]>([]);
+  const [cartItem, setCartItems] = useState<CartItem[]>(() => {
+    const storedItems = sessionStorage.getItem(`cartItems-${restaurantId}`);
+    return storedItems ? JSON.parse(storedItems) : [];
+  });
 
   if (isLoading) {
     return "Loading";
@@ -25,6 +30,9 @@ function DetailsPage() {
   if (!restaurant) {
     return "Restaurant not found";
   }
+  const onCheckout = (userFormData: UserFormData) => {
+    console.log("userFormData", userFormData);
+  };
   const addToCart = (menuItem: MenuItemType) => {
     setCartItems((prevCartItem) => {
       //1. first check cart if item is already exits then update quantity.
@@ -49,7 +57,10 @@ function DetailsPage() {
           },
         ];
       }
-
+      sessionStorage.setItem(
+        `cartItems-${restaurantId}`,
+        JSON.stringify(updatedCartItem)
+      );
       return updatedCartItem;
     });
   };
@@ -73,6 +84,10 @@ function DetailsPage() {
             : cartItem
         );
       }
+      sessionStorage.setItem(
+        `cartItems-${restaurantId}`,
+        JSON.stringify(updatedCartItem)
+      );
       return updatedCartItem;
     });
   };
@@ -103,6 +118,12 @@ function DetailsPage() {
               cartItem={cartItem}
               removeCartItem={removeCartItem}
             />
+            <CardFooter>
+              <CheckoutButton
+                onCheckout={onCheckout}
+                disabled={cartItem.length === 0}
+              />
+            </CardFooter>
           </Card>
         </div>
       </div>
