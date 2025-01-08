@@ -17,7 +17,7 @@ export type CartItem = {
 function DetailsPage() {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetRestaurantDetails(restaurantId);
-  const [cartItem, setCartItem] = useState<CartItem[]>([]);
+  const [cartItem, setCartItems] = useState<CartItem[]>([]);
 
   if (isLoading) {
     return "Loading";
@@ -26,12 +26,12 @@ function DetailsPage() {
     return "Restaurant not found";
   }
   const addToCart = (menuItem: MenuItemType) => {
-    setCartItem((prevCartItem) => {
+    setCartItems((prevCartItem) => {
       //1. first check cart if item is already exits then update quantity.
       const isExistItem = prevCartItem.find(
-        (cartItem: CartItem) => cartItem._id === menuItem._id
+        (cartItem) => cartItem._id === menuItem._id
       );
-      let updatedCartItem: CartItem[];
+      let updatedCartItem;
       if (isExistItem) {
         updatedCartItem = prevCartItem.map((cartItem: CartItem) =>
           cartItem._id === menuItem._id
@@ -39,18 +39,22 @@ function DetailsPage() {
             : cartItem
         );
       } else {
-        updatedCartItem = prevCartItem.map((cartItem: CartItem) =>
-          cartItem._id === menuItem._id
-            ? { ...cartItem, quantity: 1 }
-            : cartItem
-        );
+        updatedCartItem = [
+          ...cartItem,
+          {
+            _id: menuItem._id,
+            name: menuItem.name,
+            price: menuItem.price,
+            quantity: 1,
+          },
+        ];
       }
-      //2. if not then add item in cart as new item
+
       return updatedCartItem;
     });
   };
   const removeCartItem = (menuItem: CartItem) => {
-    setCartItem((prevCartItem) => {
+    setCartItems((prevCartItem) => {
       const isExistItem = prevCartItem.find(
         (cartItem) => cartItem._id === menuItem._id
       );
