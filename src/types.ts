@@ -33,3 +33,19 @@ export type RestaurantSearchResponse = {
     pageSize: number;
   };
 };
+
+export type CheckoutSessionRequest = {
+  cartsItems: {
+    menuItemId: string;
+    name: string;
+    price: string;
+    quantity: string;
+  }[];
+  deliveryDetails: {
+    email: string;
+    name: string;
+    addressLine: string;
+    city: string;
+  };
+  restaurantId: string;
+};

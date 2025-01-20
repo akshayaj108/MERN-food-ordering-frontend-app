@@ -23,7 +23,7 @@ const RestaurantInfoCard = (restaurant: Props) => {
           {restaurantDetail.city}, {restaurantDetail.country}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex">
+      <CardContent className="flex flex-wrap">
         {restaurantDetail.cuisines.map((item, index) => (
           <span className="flex">
             <span>{item}</span>

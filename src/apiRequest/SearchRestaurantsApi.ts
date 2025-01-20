@@ -23,6 +23,7 @@ export const useGetRestaurantDetails = (restaurantId?: string) => {
   );
   return { restaurant, isLoading };
 };
+
 export const useSearchRestaurant = (
   searchState: SearchState,
   city?: string

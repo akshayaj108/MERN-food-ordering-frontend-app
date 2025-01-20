@@ -1,3 +1,4 @@
+import { useCreateCheckoutSession } from "@/apiRequest/OrderApi";
 import { useGetRestaurantDetails } from "@/apiRequest/SearchRestaurantsApi";
 import CheckoutButton from "@/components/CheckoutButton";
 import MenuItem from "@/components/MenuItem";
@@ -19,6 +20,9 @@ export type CartItem = {
 function DetailsPage() {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetRestaurantDetails(restaurantId);
+  const { createCheckoutSession, isLoading: isCheckoutLoading } =
+    useCreateCheckoutSession();
+
   const [cartItem, setCartItems] = useState<CartItem[]>(() => {
     const storedItems = sessionStorage.getItem(`cartItems-${restaurantId}`);
     return storedItems ? JSON.parse(storedItems) : [];
@@ -30,8 +34,28 @@ function DetailsPage() {
   if (!restaurant) {
     return "Restaurant not found";
   }
-  const onCheckout = (userFormData: UserFormData) => {
-    console.log("userFormData", userFormData);
+  const onCheckout = async (userFormData: UserFormData) => {
+    if (!restaurant) return;
+    //convert data as per backend api needed
+    const checkoutData = {
+      cartsItems: cartItem.map((item) => ({
+        menuItemId: item._id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity.toString(),
+      })),
+
+      deliveryDetails: {
+        name: userFormData.name,
+        addressLine1: userFormData.addressLine1,
+        city: userFormData.city,
+        country: userFormData.country,
+        email: userFormData.email as string,
+      },
+      restaurantId: restaurant._id,
+    };
+    const data = await createCheckoutSession(checkoutData);
+    window.location.href = data.url;
   };
   const addToCart = (menuItem: MenuItemType) => {
     setCartItems((prevCartItem) => {
@@ -120,6 +144,7 @@ function DetailsPage() {
             />
             <CardFooter>
               <CheckoutButton
+                isLoading={isCheckoutLoading}
                 onCheckout={onCheckout}
                 disabled={cartItem.length === 0}
               />
