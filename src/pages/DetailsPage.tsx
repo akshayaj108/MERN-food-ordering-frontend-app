@@ -46,10 +46,10 @@ function DetailsPage() {
       })),
 
       deliveryDetails: {
-        email: userFormData.email as string,
         name: userFormData.name,
-        addressLine: userFormData.addressLine1,
+        addressLine1: userFormData.addressLine1,
         city: userFormData.city,
+        email: userFormData.email as string,
       },
       restaurantId: restaurant._id,
     };

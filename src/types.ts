@@ -44,7 +44,7 @@ export type CheckoutSessionRequest = {
   deliveryDetails: {
     email: string;
     name: string;
-    addressLine: string;
+    addressLine1: string;
     city: string;
   };
   restaurantId: string;
