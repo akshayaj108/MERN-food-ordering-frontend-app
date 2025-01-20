@@ -39,7 +39,7 @@ export type CheckoutSessionRequest = {
     menuItemId: string;
     name: string;
     price: string;
-    quantity: string;
+    quantity: number;
   }[];
   deliveryDetails: {
     email: string;

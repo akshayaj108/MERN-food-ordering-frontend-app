@@ -41,16 +41,15 @@ function DetailsPage() {
       cartsItems: cartItem.map((item) => ({
         menuItemId: item._id,
         name: item.name,
-        price: item.price,
-        quantity: item.quantity.toString(),
+        price: item.price.toString(),
+        quantity: item.quantity,
       })),
 
       deliveryDetails: {
-        name: userFormData.name,
-        addressLine1: userFormData.addressLine1,
-        city: userFormData.city,
-        country: userFormData.country,
         email: userFormData.email as string,
+        name: userFormData.name,
+        addressLine: userFormData.addressLine1,
+        city: userFormData.city,
       },
       restaurantId: restaurant._id,
     };
